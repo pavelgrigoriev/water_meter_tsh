@@ -24,7 +24,7 @@ def process_image(img_path: str,
         return {}
 
     seg_res = seg_model(img_path, agnostic_nms=True, device="cpu",
-                         task="segment", conf=seg_conf)[0]
+                         task="segment", conf=seg_conf, iou=0.2)[0]
     masks = seg_res.masks.data.cpu().numpy()
     classes = seg_res.boxes.cls.cpu().numpy().astype(int)
     boxes = seg_res.boxes.xyxy.cpu().numpy().astype(int)
