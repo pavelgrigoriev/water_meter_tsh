@@ -59,6 +59,15 @@ def process_image(img_path: str,
         digits_str = ''.join(str(d) for d in det_classes[order])
         results[label] = digits_str
 
+        if len(digits_str) >= 4:
+            int_part = digits_str[:-3]
+            frac_part = digits_str[-3:]
+            formatted_number = f"{int_part}.{frac_part}"
+        else:
+            formatted_number = f"0.{digits_str.zfill(3)}"
+
+        results[label] = formatted_number
+
     # Если ничего не обнаружили
     if all(v is None for v in results.values()):
         return {}
